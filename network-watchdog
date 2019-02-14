@@ -1,7 +1,7 @@
 #!/bin/bash
 
 HOST=www.baidu.com
-CURL=curl -sS -o /dev/null --max-tim 15 --retry 5 --retry-delay 60
+CURL="curl -sS -o /dev/null --max-time 15 --retry 5 --retry-delay 60"
 
 (
     # Wait for lock on /var/lock/.network-watchdog.lock (fd 200) for 10 seconds
