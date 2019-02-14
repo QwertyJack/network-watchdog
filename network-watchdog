@@ -1,0 +1,17 @@
+#!/bin/bash
+
+HOST=www.baidu.com
+CURL=curl -sS -o /dev/null --max-tim 15 --retry 5 --retry-delay 60
+
+(
+    # Wait for lock on /var/lock/.network-watchdog.lock (fd 200) for 10 seconds
+    flock -x -w 5 200 || exit 1
+
+    # Do stuff
+    $CURL $HOST && exit 0
+
+    # If failed, do *SOMETHING*
+    date >> /tmp/network-watchdog.log
+    # sudo reboot
+
+) 200>/var/lock/.network-watchdog.lock
